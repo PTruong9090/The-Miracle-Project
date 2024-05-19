@@ -8,7 +8,6 @@ import { allclasses } from '../assets/sample_classes';
 
 function Home(){
     
-    const [text, setText] = useState("");
     const navigateTo = useNavigate();
 
     const handleClick = (index) => {
@@ -36,16 +35,38 @@ function Home(){
             } catch (error) {
                 console.error("Error loading data: ", error);
             }
-            setText(transcript)
         };
         recognition.start()
     }
 
+    const [modal, setModal] = useState(true)
+
+    function toggleModal(){
+        setModal(!modal)
+    }
+
     return (
         <div className='classes'>
+            
+            {modal && <div className="modal">
+                <div className="overlay">
+                    
+                </div>
+                <div className="modal-content">
+                    <h2>Hello Student! Tell us which class you would like to visit!</h2>
+                    <MicIcon className= "svg_icons_modal" onClick={handleSpeak} />
+                    <button className = 'close-modal'
+                    onClick={toggleModal}>Close</button>
+                </div>
+            </div>}
+            
             <h1> ⭐️ Classes! ⭐️ </h1>
-            <MicIcon onClick={handleSpeak} />
-            <p>{text}</p>
+            
+            <div className= "intro">
+                <h2>Click microphone and tell us which class you want to see! </h2>
+                <MicIcon className="svg_icons" onClick={handleSpeak} />
+            </div>
+            
             <div className='classes__container'>
                 <div className='classes__wrapper'>
                     <ul className='classes__items'>

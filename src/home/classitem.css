@@ -1,17 +1,22 @@
 .cards__item__img {
     width: 100%;
-    max-width: 200px; /* Limit the width to 300px */
+    max-width: 300px; /* Limit the width to 300px */
     height: auto; /* Maintain aspect ratio */
-    border-radius: 8px;
+    align-content: center;
+    border-radius: 1rem 1rem 0 0;
 }
 
 .cards__item__link {
+    width: 20rem;
+    border-radius: 1rem;
+    box-shadow: 0px 10px 8px #999;
     display: flex;
-    min-width: 500px;
+    flex-direction: column;
+    margin: 1rem;
+    background-color: white;
+    height: fit-content;
 }
 
-.classimage, .cards__item__caption {
-    flex: 1; /* Grow and shrink equally to fill available space */
-    border: 1px solid #ddd; /* Optional: Add borders for clarity */
-    padding: 10px; /* Optional: Add padding for spacing */
+.cards__classname, .cards__instructor, .cards__description{
+    margin: 0.5rem 5%;
 }

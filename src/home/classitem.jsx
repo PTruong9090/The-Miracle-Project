@@ -12,9 +12,9 @@ function ClassItem(props){
                 </div>
                 <div className='cards__item__caption'>
                     {/* card caption */}
-                    <h4 className='cards__item__caption_text'>Class Name: {props.classname}</h4>
-                    <h4 className='cards__item__caption_text'>Instructor: {props.instructor}</h4>
-                    <h4 className='cards__item__caption_text'>Description: {props.description}</h4>
+                    <h2 className='cards__classname'>{props.classname}</h2>
+                    <h4 className='cards__instructor'>Instructor: {props.instructor}</h4>
+                    <h4 className='cards__description'>Description: {props.description}</h4>
                 </div>
             </div>
         
