@@ -1,13 +1,21 @@
 import React, { useState, useEffect, Navigate } from 'react'; 
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate} from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
 
 import Home from './home/home'
+import Header from './header/header';
+import Roadmap from './roadmap/roadmap';
 
 export default function App() {  
     return (
-      <Router>
-        <Home />
-      </Router>
+        
+        <Router>
+                <Header />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/roadmap/:classID" element={<Roadmap />} />
+                    <Route path="*" element={<Navigate to="/"/>} />
+                </Routes>
+        </Router>
+
     );
   }
