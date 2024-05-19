@@ -24,21 +24,19 @@ router.post('/', upload.single('image'), async (req, res) => {
         // Check if teacher name exists
         let teacher = await Teacher.findOne({where: {first: req.body.first, last: req.body.last}})
         if (!teacher) {
-            console.log("error occured creating teacher")
             // Create teacher
-            await Teacher.create({
+            teacher = await Teacher.create({
                 first: req.body.first,
                 last: req.body.last,
             })
         }
 
         // Create new class
-        console.log("error occured after creating teacher")
         const newClass = await Class.create({
             className: req.body.className,
             description: req.body.description,
             image: req.file.filename,
-            TeacherId: teacher.body.id
+            TeacherId: teacher.id
         });
 
         res.status(201).json({message: 'Class created successfully', data: newClass});
@@ -57,17 +55,18 @@ router.get('/', async (req, res) => {
                 model: Teacher,
                 attributes: ['first', 'last']
             },
-            attributes: ['className']
+            attributes: ['id', 'className']
         })
         
         const formattedClasses = classes.map(classData => ({
+            id: classData.id, 
             className: classData.className,
             teacherName: `${classData.Teacher.first} ${classData.Teacher.last}`
         }));
 
         res.status(200).json(formattedClasses);
     } catch (error) {
-
+        res.status(500).json({ message: "Internal server error" });
     }
 })
 

@@ -13,6 +13,7 @@ function Header(){
                     <img src={logo} alt='Logo' className='logo' />
                 </div>
                 <nav>
+                    <Link to='/class' className="nav-link">Create Class</Link>
                     <Link to='/upload' className="nav-link">Upload</Link>
                 </nav>
             </header>

@@ -52,8 +52,15 @@ body{
 
 input {
     width: 50%;
+    
 }
 
 #course-dropdown {
     width: 80%;
+}
+
+#description {
+    height: 100px;
+    padding-top: 5px; /* Adjust the value as needed */
+    text-align: start; /* Align text to the start (left) */
 }

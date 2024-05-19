@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {Class, ClassResource, Teacher, File} = require('../models');
-const sequelize = require('sequelize');
+const {Class, ClassResource, File} = require('../models');
 const multer = require('multer');
 
 /*
@@ -20,35 +19,36 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 // Route to handle file uploads
-router.post('/upload/:classId', upload.array('files'), async (req, res) => {
+router.post('/', upload.array('files'), async (req, res) => {
     try {
-
+        console.log("eardjflkasjfkl")
         //  Get data from data sent
-        const { classId } = req.params;
+        const classId = req.body.classId;
         const { title, description } = req.body;
         const files = req.files;    // Array of uploaded files
 
-        // Get class data
+        // Check if class exists
+        console.log(classId);
         const course = await Class.findByPk(classId);
         if (!course) {
             return res.status(404).json({ success: false, message: "Class not found" });
         }
 
         // Create class resource
-        const classResource = await classResource.create({
+        console.log("test", classId)
+        const resource = await ClassResource.create({
             title,
             description,
-            classId: classId
+            ClassId: classId
         });
 
         // Iterate over each file and create File record
         const createdFiles = [];
         for (const file of files) {
-            const fileType = await FileType.fromFile(file.path);
-            const fileRecord = File.create({
+            const fileRecord = await File.create({
                 url: file.path,
-                type: fileType.ext,
-                classResourceId: classResource.id
+                type: file.mimetype, // Use file.mimetype to get the file type
+                ClassResourceId: resource.id
             });
             createdFiles.push(fileRecord);
         }
@@ -56,7 +56,7 @@ router.post('/upload/:classId', upload.array('files'), async (req, res) => {
         res.status(201).json({
             success: true, 
             message: "File uploaded successfully", 
-            data: { classResourcee, files: createdFiles}});
+            data: { ClassResource, files: createdFiles}});
 
     } catch (error) {
         console.error("Error uploading files:", error)

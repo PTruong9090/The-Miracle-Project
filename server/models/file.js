@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         type: {
-            type: DataTypes.ENUM('pdf', 'video', 'mp3', 'image'),
+            type: DataTypes.STRING,
             allowNull: false
         }
     });

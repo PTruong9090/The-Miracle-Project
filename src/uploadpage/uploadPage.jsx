@@ -5,7 +5,8 @@ import axios from "axios";
 function UploadPage() {
     // State variables
     const [title, setTitle] = useState('');
-    const [teacherName, setTeacherName] = useState('');
+    // const [teacherName, setTeacherName] = useState('');
+    const [description, setDescription] = useState('');
     const [files, setFiles] = useState([]);
     const [courses, setCourses] = useState([])
 
@@ -14,8 +15,8 @@ function UploadPage() {
         setTitle(event.target.value);
     }
 
-    const handleTeacherNameChange = (event) => {
-        setTeacherName(event.target.value);
+    const handleDescriptionChange = (event) => {
+        setDescription(event.target.value);
     }
 
     const handleFilesChange = (event) => {
@@ -34,18 +35,44 @@ function UploadPage() {
     useEffect(() => {
         const fetchClassNames = async () => {
             try {
-                const response = await axios.get('/c')
+                const response = await axios.get('http://localhost:8080/c')
                 setCourses(response.data);
             } catch (error) {
                 console.error('Error fetching class names: ', error);
             }
-        }
-    })
+        };
+        fetchClassNames();
+    }, []);
 
     // Handle form submission
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-    };
+
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('description', description);
+        files.forEach((file, index) => {
+            formData.append('files', file);
+        });
+        const selectedClassId = event.target.elements.courseDropdown.value;
+        formData.append('classId', selectedClassId);
+
+        try {
+            const response = await axios.post('http://localhost:8080/r', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            console.log(response.data); // Handle the response data as needed
+            // Reset the form fields
+            setTitle('');
+            setFiles([]);
+            setDescription('');
+            event.target.reset();
+        } catch (error) {
+            console.error('There was an error submitting the form!', error);
+            }
+        };
 
     return (
         <main>
@@ -61,17 +88,18 @@ function UploadPage() {
                                 value = {title}
                                 onChange = {handleTitleChange}
                             />
-                            <label htmlFor="teacherName">Teacher Name:</label>
+                            <label htmlFor="description">Description:</label>
                             <input
                                 type = 'text'
-                                id = 'teacherName'
-                                value = {teacherName}
-                                onChange = {handleTeacherNameChange}
+                                id = 'description'
+                                value = {description}
+                                onChange = {handleDescriptionChange}
                             />
                             <label htmlFor="fileUpload">Upload Files:</label>
                             <input
                                 type = 'file'
                                 id = 'fileUpload'
+                                name = 'files'
                                 multiple
                                 onChange={handleFilesChange}
                             />
@@ -85,10 +113,10 @@ function UploadPage() {
                         </div>
                         </div>
                         <div className='courses-container'>
-                            <select id='course-dropdown'>
+                            <select id='course-dropdown' name='courseDropdown'>
                                 <option value="">Select a course</option>
                                 {courses.map((course) => (
-                                    <option key={course.id} value={course.id}>{course.name}</option>
+                                    <option key={course.id} value={course.id}>{course.className}</option>
                                 ))}
                             </select>
                         </div>
