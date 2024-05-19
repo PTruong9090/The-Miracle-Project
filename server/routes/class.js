@@ -24,6 +24,7 @@ router.post('/', upload.single('image'), async (req, res) => {
         // Check if teacher name exists
         let teacher = await Teacher.findOne({where: {first: req.body.first, last: req.body.last}})
         if (!teacher) {
+            console.log("error occured creating teacher")
             // Create teacher
             await Teacher.create({
                 first: req.body.first,
@@ -32,6 +33,7 @@ router.post('/', upload.single('image'), async (req, res) => {
         }
 
         // Create new class
+        console.log("error occured after creating teacher")
         const newClass = await Class.create({
             className: req.body.className,
             description: req.body.description,

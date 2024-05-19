@@ -4,16 +4,17 @@ import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate} from 
 import Home from './home/home'
 import Header from './header/header';
 import Roadmap from './roadmap/roadmap';
+import UploadPage from './uploadpage/uploadPage';
 
 export default function App() {  
     return (
-        
         <Router>
                 <Header />
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/upload" element={<UploadPage/>} />
                     <Route path="/roadmap/:classID" element={<Roadmap />} />
-                    <Route path="*" element={<Navigate to="/"/>} />
+                    
                 </Routes>
         </Router>
 

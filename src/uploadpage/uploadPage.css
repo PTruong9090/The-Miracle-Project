@@ -1,0 +1,59 @@
+/* Container Formatting */
+body{
+    height: 1000px;
+}
+.resource-upload-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 80%;
+    height: 600px;
+    margin: 0 auto; /* Center align horizontally */
+}
+
+.header-container {
+    align-self: center;
+    font-size: 24px;
+    padding-bottom: 20px;
+}
+
+.body-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.information-container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.uploaded-files-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.uploaded-file {
+    padding-bottom: 10px;
+}
+
+.courses-container {
+    display: flex;
+    flex-direction: column;    
+    width: 20%;
+    
+}
+
+#title {
+    margin-left: 0;
+}
+
+input {
+    width: 50%;
+}
+
+#course-dropdown {
+    width: 80%;
+}
