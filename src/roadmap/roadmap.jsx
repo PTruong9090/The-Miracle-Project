@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import YouTubeVideo from './youtube_vid';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import './roadmap.css';
 import axios from 'axios';
@@ -13,16 +12,18 @@ function Roadmap() {
     const [modal, setModal] = useState(false);
 
     function toggleModal(url, type) {
-        if (type.startsWith('video')) {
+        if (type.startsWith('video/mp4')) {
             setVideoUrl(url);
             setModal(true);
+        } else if (type.startsWith('video')) {
+            // If it's another type of video, open it in a new tab
+            window.open(url, '_blank');
         } else {
             // Construct the full URL by prepending the backend base URL
             const fullUrl = `http://localhost:8080${url}`;
             window.open(fullUrl, '_blank'); 
         }
     }
-
     useEffect(() => {
         const fetchClasses = async () => {
             try {
@@ -46,21 +47,28 @@ function Roadmap() {
         fetchResources();
     }, [params.classID]);
 
-    const StringTable = ({ list }) => {
-        return (
+    return (
+        <div>
+            <div className="classinfo">
+                <h1>{course.className}</h1>
+                <h2>{course.teacherName}</h2>
+            </div>
             <div className="table-container">
                 {modal && (
                     <div className="modal">
                         <div className="overlay" onClick={() => setModal(false)}></div>
                         <div className="modal-content">
                             <button className="close-modal" onClick={() => setModal(false)}>Close</button>
-                            <YouTubeVideo url={videoUrl} />
+                            <video controls>
+                                <source src={videoUrl} type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
                         </div>
                     </div>
                 )}
                 <table className="centered-table">
                     <tbody>
-                        {list.map((resource, resourceIndex) => (
+                        {resources.map((resource, resourceIndex) => (
                             resource.Files.map((file, fileIndex) => (
                                 <tr key={`${resourceIndex}-${fileIndex}`}>
                                     <td onClick={() => toggleModal(file.url, file.type)}>
@@ -73,16 +81,6 @@ function Roadmap() {
                     </tbody>
                 </table>
             </div>
-        );
-    };
-
-    return (
-        <div>
-            <div className="classinfo">
-                <h1>{course.className}</h1>
-                <h2>{course.teacherName}</h2>
-            </div>
-            <StringTable list={resources} />
         </div>
     );
 }
