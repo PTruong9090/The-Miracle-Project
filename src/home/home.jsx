@@ -74,9 +74,7 @@ function Home(){
                     onClick={toggleModal}>Close</button>
                 </div>
             </div>}
-            
-            <h1> ⭐️ Classes! ⭐️ </h1>
-            
+                        
             <div className= "intro">
                 <h2>Click microphone and tell us which class you want to see! </h2>
                 <MicIcon className="svg_icons" onClick={handleSpeak} />

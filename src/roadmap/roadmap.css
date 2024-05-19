@@ -1,0 +1,24 @@
+/* Ensure the table container is centered */
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 150px;
+}
+
+/* Style the table */
+.centered-table {
+    border-collapse: collapse;
+    border: 1px solid #ccc; /* Thin border around the table */
+}
+
+/* Style the table cells */
+.centered-table td {
+    border: 1px solid #ccc; /* Thin border around each cell */
+    padding: 10px;
+    text-align: left;
+}
+
+.classinfo {
+    padding-left: 50px;
+}
