@@ -1,0 +1,25 @@
+
+
+.class-create-container {
+    border: 1px solid black;
+    width: 80%;
+    height: 600px;
+}
+
+.className-container, .name-container, .description-container, .image-container {
+    height: 10%;
+}
+
+.first-name-container {
+    padding-bottom: 10px;
+}
+
+.description-container {
+    height: 200px;
+}
+
+#description {
+    height: 100px;
+    vertical-align: top;
+    text-align: start;
+}
