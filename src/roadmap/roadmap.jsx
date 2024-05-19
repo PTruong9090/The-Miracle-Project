@@ -7,8 +7,9 @@ import './roadmap.css'
 
 
 function Roadmap(){
+    const [courses, setCourses] = useState([]);
     const params= useParams();
-    const classData = allclasses[params.classID]
+    
     const [videoUrl, setVideoUrl] = useState(classData.material_list[0])
 
     const [modal, setModal] = useState(false)

@@ -15,9 +15,10 @@ function Home(){
     const handleClick = (index) => {
         navigateTo(`/roadmap/${index}`)
     };
-    const strippedString = inputString => inputString.replace(/[^a-zA-Z]/g, '');
+    
+    const strippedString = inputString => inputString.replace(/[^a-zA-Z0-9]/g, '');
     function searchFirstClassByClassnameIndex(classes, searchTerm) {
-        return classes.findIndex(cls => strippedString(cls.classname).toLowerCase().includes(searchTerm.toLowerCase()));
+        return classes.findIndex(cls => strippedString(cls.className).toLowerCase().includes(searchTerm.toLowerCase()));
     }
 
     const handleSpeak = () => {
@@ -32,8 +33,8 @@ function Home(){
                 console.log("using chat")
                 const data = await run(transcript);
                 console.log("chatgpt: ", data);
-                const firstMatchingIndex = searchFirstClassByClassnameIndex(allclasses, data)
-                handleClick(firstMatchingIndex)
+                const firstMatchingIndex = searchFirstClassByClassnameIndex(courses, data)
+                handleClick(courses[firstMatchingIndex].id)
             } catch (error) {
                 console.error("Error loading data: ", error);
             }
@@ -74,7 +75,9 @@ function Home(){
                     onClick={toggleModal}>Close</button>
                 </div>
             </div>}
-                        
+            
+            <h1> ⭐️ Classes! ⭐️ </h1>
+            
             <div className= "intro">
                 <h2>Click microphone and tell us which class you want to see! </h2>
                 <MicIcon className="svg_icons" onClick={handleSpeak} />
