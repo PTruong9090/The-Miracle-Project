@@ -72,4 +72,33 @@ router.get('/', async (req, res) => {
     }
 })
 
+// Fetch all classes with their associated teachers
+router.get('/:classId', async (req, res) => {
+    try {
+        const classes = await Class.findOne({
+            where: {
+                id: req.params.classId
+            },
+            include: {
+                model: Teacher,
+                attributes: ['first', 'last']
+            },
+            attributes: ['id', 'className', 'description', 'image']
+        });
+
+        const formattedClass = {
+            id: classes.id,
+            image: classes.image,
+            className: classes.className,
+            teacherName: `${classes.Teacher.first} ${classes.Teacher.last}`,
+            description: classes.description
+        };
+
+        res.status(200).json(formattedClass);
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+})
+
 module.exports = router;
+
