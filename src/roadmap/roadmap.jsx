@@ -30,7 +30,13 @@ function Roadmap(){
                     <div className="modal-content">
                         <button className = 'close-modal'
                         onClick={() => toggleModal(0)}>Close</button>
-                        <YouTubeVideo url={videoUrl} />
+                        {videoUrl.includes("youtube") ? (
+                            <YouTubeVideo url={videoUrl} />
+                            ) : (
+                            <object data={videoUrl} type="application/pdf" width="560" height="315">
+                                <p>PDF cannot be displayed. <a href={url}>Click here to download the PDF</a></p>
+                             </object>
+                        )}
                     </div>
                 </div>)}
                 <table className="centered-table">
@@ -38,7 +44,7 @@ function Roadmap(){
                         {list.map((item, index) => (
                             <tr key={index}>
                                 <td onClick = {() => toggleModal(index)}><OndemandVideoIcon /></td>
-                                <td onClick = {() => toggleModal(index)}>{item}</td>
+                                <td onClick = {() => toggleModal(index)}>Video {index + 1}</td>
                             </tr>
                         ))}
                     </tbody>
