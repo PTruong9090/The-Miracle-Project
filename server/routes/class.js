@@ -35,7 +35,7 @@ router.post('/', upload.single('image'), async (req, res) => {
         const newClass = await Class.create({
             className: req.body.className,
             description: req.body.description,
-            image: req.file.filename,
+            image: req.file ? req.file.filename : null,
             TeacherId: teacher.id
         });
 
@@ -55,13 +55,15 @@ router.get('/', async (req, res) => {
                 model: Teacher,
                 attributes: ['first', 'last']
             },
-            attributes: ['id', 'className']
+            attributes: ['id', 'className', 'description', 'image']
         })
         
         const formattedClasses = classes.map(classData => ({
             id: classData.id, 
+            image: classData.image,
             className: classData.className,
-            teacherName: `${classData.Teacher.first} ${classData.Teacher.last}`
+            teacherName: `${classData.Teacher.first} ${classData.Teacher.last}`,
+            description: classData.description
         }));
 
         res.status(200).json(formattedClasses);

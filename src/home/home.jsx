@@ -5,8 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import MicIcon from '@mui/icons-material/Mic';
 import { run } from '../gemini/gemini-test.cjs';
 import { allclasses } from '../assets/sample_classes';
+import axios from "axios";
 
 function Home(){
+    const [courses, setCourses] = useState([]);
     
     const navigateTo = useNavigate();
 
@@ -45,6 +47,19 @@ function Home(){
         setModal(!modal)
     }
 
+    useEffect(() => {
+        const fetchClasses = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/c')
+                setCourses(response.data);
+            } catch (error) {
+                console.error('Error fetching class names: ', error);
+            }
+        };
+        fetchClasses();
+    }, []);
+    console.log(courses)
+
     return (
         <div className='classes'>
             
@@ -71,11 +86,12 @@ function Home(){
                 <div className='classes__wrapper'>
                     <ul className='classes__items'>
                         {
-                        allclasses.map((classitem, index) => (
-                            <div key={index} onClick={() => handleClick(index)}>
+                        courses.map((classitem, index) => (
+                            <div key={classitem.id} onClick={() => handleClick(classitem.id)}>
                                 <ClassItem
-                                    classname={classitem.classname}
-                                    instructor={classitem.instructor}
+                                    src={classitem.image}
+                                    classname={classitem.className}
+                                    instructor={classitem.teacherName}
                                     description={classitem.description}
                                 />
                             </div>

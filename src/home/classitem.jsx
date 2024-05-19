@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import theatreImage from '../assets/theatre.jpg';
+import goldImage from '../assets/gold.png';
 import './classitem.css'
 
 function ClassItem(props){
@@ -8,7 +8,11 @@ function ClassItem(props){
         <>
             <div className='cards__item__link'>
                 <div className='classimage'>
-                    <img className='cards__item__img' src={theatreImage}/>
+                    {props.src ? (
+                        <img className='cards__item__img' src={`http://localhost:8080/files/${props.src}`}/>
+                        ) : (
+                        <img className='cards__item__img' src={goldImage} alt="Default Image" />
+                    )}
                 </div>
                 <div className='cards__item__caption'>
                     {/* card caption */}
